@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZVRA PERFORMANCE VALORANT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg: #0a0d0f;
+    --bg-panel: #12171a;
+    --line: #1f2b2e;
+    --red: #ff4655;
+    --red-dim: #7a1f28;
+    --cyan: #5ce1e6;
+    --text: #d8e2e4;
+    --text-dim: #6b7c80;
+    --ok: #4ade80;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      linear-gradient(180deg, rgba(10,13,15,0.96), rgba(10,13,15,0.99)),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,70,85,0.03) 40px);
+    color:var(--text);
+    font-family:'Rajdhani', sans-serif;
+    min-height:100vh;
+  }
+  .scanline{
+    position:fixed; inset:0; pointer-events:none; z-index:50;
+    background: repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 2px);
+    mix-blend-mode: overlay;
+  }
+
+  header{
+    border-bottom:1px solid var(--line);
+    padding:28px 6vw 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute; left:0; top:0; bottom:0; width:4px;
+    background:var(--red);
+    box-shadow:0 0 20px var(--red);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:4px; color:var(--red);
+    text-transform:uppercase; margin-bottom:10px;
+  }
+  h1{
+    font-size:clamp(32px,5vw,58px);
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    line-height:1;
+  }
+  h1 span{color:var(--red);}
+  .subtitle{
+    color:var(--text-dim);
+    font-size:16px;
+    margin-top:14px;
+    max-width:640px;
+  }
+  .status-row{
+    display:flex; gap:22px; margin-top:22px; flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim);
+  }
+  .status-row b{color:var(--ok);}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+
+  main{max-width:1180px; margin:0 auto; padding:48px 6vw 100px;}
+
+  .section-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:3px; color:var(--cyan);
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:18px;
+  }
+  .section-label::after{content:""; flex:1; height:1px; background:var(--line);}
+
+  .panel{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    padding:26px 28px;
+    margin-bottom:28px;
+    position:relative;
+  }
+  .panel h2{
+    font-size:20px; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;
+  }
+  .panel p.desc{color:var(--text-dim); font-size:14.5px; margin-bottom:20px; max-width:640px;}
+
+  /* RAM Selector */
+  .ram-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  .ram-value{
+    font-family:'JetBrains Mono', monospace;
+    font-size:40px; font-weight:700; color:var(--red);
+    min-width:130px;
+  }
+  input[type=range]{
+    -webkit-appearance:none; flex:1; min-width:220px; height:4px;
+    background:var(--line); outline:none; border-radius:2px;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:18px; height:18px; border-radius:2px;
+    background:var(--red); cursor:pointer; box-shadow:0 0 10px var(--red);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px; height:18px; border-radius:2px; border:none;
+    background:var(--red); cursor:pointer; box-shadow:0 0 10px var(--red);
+  }
+
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; letter-spacing:1.5px; text-transform:uppercase;
+    background:transparent; color:var(--text);
+    border:1px solid var(--red); padding:13px 22px;
+    cursor:pointer; transition:.15s; white-space:nowrap;
+  }
+  .btn:hover{background:var(--red); color:#0a0d0f; box-shadow:0 0 18px var(--red-dim);}
+  .btn.primary{background:var(--red); color:#0a0d0f;}
+  .btn.primary:hover{background:#ff5c6a;}
+  .btn.ghost{border-color:var(--line); color:var(--text-dim);}
+  .btn.ghost:hover{border-color:var(--cyan); color:var(--cyan); background:transparent; box-shadow:0 0 14px rgba(92,225,230,0.25);}
+
+  /* Priority grid */
+  .grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;}
+  .card{
+    border:1px solid var(--line); padding:20px; background:#0d1114;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .card .tag{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim); letter-spacing:2px;}
+  .card h3{font-size:19px; text-transform:uppercase;}
+  .card .note{font-size:13px; color:var(--text-dim); flex:1;}
+
+  /* Tool list */
+  .tool-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; border-bottom:1px solid var(--line); gap:20px; flex-wrap:wrap;
+  }
+  .tool-row:last-child{border-bottom:none;}
+  .tool-info h3{font-size:17px; text-transform:uppercase; margin-bottom:4px;}
+  .tool-info p{font-size:13.5px; color:var(--text-dim); max-width:520px;}
+
+  .warn{
+    border:1px solid var(--red-dim); background:rgba(255,70,85,0.06);
+    padding:16px 18px; font-size:13.5px; color:#ffb3ba; margin-top:16px;
+    font-family:'JetBrains Mono', monospace; line-height:1.6;
+  }
+  .warn b{color:var(--red);}
+
+  .excluded{
+    border:1px dashed #3a2a2a; padding:18px 20px; margin-top:10px;
+    color:var(--text-dim); font-size:13.5px; line-height:1.7;
+  }
+  .excluded b{color:var(--red);}
+
+  footer{
+    border-top:1px solid var(--line); padding:26px 6vw;
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--text-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  @media (max-width:640px){
+    .status-row{gap:14px;}
+    header{padding:24px 5vw 20px;}
+    main{padding:36px 5vw 80px;}
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+
+<header>
+  <div class="eyebrow">// SYSTEM TUNING TOOLKIT</div>
+  <h1>ZVRA<span> PERFORMANCE</span><br>VALORANT</h1>
+  <p class="subtitle">Kumpulan registry &amp; script tweak buat setup Windows sebelum ranked. Pilih, download, jalankan — semua dikontrol dari satu tempat.</p>
+  <div class="status-row">
+    <div><span class="dot"></span>17 script siap pakai</div>
+    <div>PRIORITY TUNER · <b>ONLINE</b></div>
+    <div>RAM RANGE · 1GB&ndash;32GB</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- RAM SECTION -->
+  <div class="section-label">01 // Svchost RAM Threshold</div>
+  <div class="panel">
+    <h2>Sesuaikan Dengan RAM Kamu</h2>
+    <p class="desc">Geser slider sesuai kapasitas RAM fisik PC kamu, lalu download. File ini mengatur ambang batas kapan Windows memisah proses svchost.exe berdasarkan RAM yang tersedia.</p>
+    <div class="ram-row">
+      <div class="ram-value"><span id="ramLabel">16</span>GB</div>
+      <input type="range" id="ramSlider" min="1" max="32" value="16">
+      <button class="btn primary" onclick="downloadRam()">Download .reg</button>
+    </div>
+  </div>
+
+  <!-- PRIORITY SECTION -->
+  <div class="section-label">02 // Valorant Process Priority</div>
+  <div class="panel">
+    <h2>Prioritas CPU Untuk Valorant</h2>
+    <p class="desc">Atur prioritas proses <code>VALORANT-Win64-Shipping.exe</code> di Windows Task Scheduler. Semakin tinggi prioritas, semakin didahulukan CPU-nya dibanding proses lain.</p>
+    <div class="grid3">
+      <div class="card">
+        <span class="tag">MAX AGGRESIVE</span>
+        <h3>High</h3>
+        <p class="note">Prioritas paling tinggi. Paling responsif, tapi proses background/kerja lain bisa sedikit tersendat saat game jalan.</p>
+        <button class="btn" onclick="downloadFile('ValorantHighPriority.reg')">Download</button>
+      </div>
+      <div class="card">
+        <span class="tag">RECOMMENDED</span>
+        <h3>Above Normal</h3>
+        <p class="note">Seimbang — Valorant tetap diprioritaskan tanpa terlalu mengganggu aplikasi lain yang jalan bareng.</p>
+        <button class="btn" onclick="downloadFile('ValorantAboveNormalPriority.reg')">Download</button>
+      </div>
+      <div class="card">
+        <span class="tag">DEFAULT</span>
+        <h3>Normal</h3>
+        <p class="note">Balikin prioritas Valorant ke standar Windows, sama kayak aplikasi lain.</p>
+        <button class="btn" onclick="downloadFile('ValorantNormalPriority.reg')">Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SYSTEM TOOLS -->
+  <div class="section-label">03 // System Tools</div>
+  <div class="panel">
+    <h2>Tweak &amp; Cleanup</h2>
+    <p class="desc">Tools tambahan buat bebersih sistem dan kurangi latency. Baca catatan tiap tool sebelum jalanin.</p>
+
+    <div class="tool-row">
+      <div class="tool-info">
+        <h3>Valorant Safe Optimization</h3>
+        <p>Game priority, disable Game DVR, transparency, Xbox services. Printer &amp; Bluetooth tidak disentuh.</p>
+      </div>
+      <button class="btn" onclick="downloadFile('Valorant_Optimization_Safe.reg')">Download .reg</button>
+    </div>
+
+    <div class="tool-row">
+      <div class="tool-info">
+        <h3>Disable Memory Compression</h3>
+        <p>Matikan kompresi RAM Windows. Bisa bantu di PC RAM besar, tapi bisa bikin RAM cepat penuh di PC RAM kecil (&lt;8GB) — hati-hati.</p>
+      </div>
+      <button class="btn" onclick="downloadFile('Disable_Memory_Compression.cmd')">Download .cmd</button>
+    </div>
+
+    <div class="tool-row">
+      <div class="tool-info">
+        <h3>Latency Tweaks</h3>
+        <p>Disable Dynamic Tick &amp; HPET, aktifkan platform tick. Bisa bantu input latency, efeknya kecil dan tergantung hardware.</p>
+      </div>
+      <button class="btn" onclick="downloadFile('Latency_Tweaks.cmd')">Download .cmd</button>
+    </div>
+
+    <div class="tool-row">
+      <div class="tool-info">
+        <h3>Clean Temporary Files</h3>
+        <p>Hapus isi folder Temp, Windows Temp, dan Prefetch. Aman dijalankan kapan saja buat bebersih ruang disk.</p>
+      </div>
+      <button class="btn" onclick="downloadFile('Clean_Temporary_Files.bat')">Download .bat</button>
+    </div>
+
+    <div class="tool-row">
+      <div class="tool-info">
+        <h3>Reset to Default</h3>
+        <p>Balikin SvcHostSplitThresholdInKB ke nilai default Windows kalau ada yang aneh setelah tweak RAM.</p>
+      </div>
+      <button class="btn ghost" onclick="downloadFile('Reset_to_Default.reg')">Download .reg</button>
+    </div>
+  </div>
+
+  <div class="excluded">
+    <b>DILEWATI:</b> <b>Disable Process Mitigation</b> gak dimasukkin ke toolkit ini. Script itu matiin hampir semua proteksi exploit Windows (DEP, CFG, SEHOP, dll) di seluruh sistem, bukan cuma Valorant — resikonya ke keamanan PC jauh lebih besar daripada gain performanya. Kalau tetap mau pakai atas risiko sendiri, cari referensinya sendiri di luar toolkit ini.
+  </div>
+
+  <div class="warn">
+    <b>[!] SEBELUM JALANIN APAPUN:</b><br>
+    1. Buat System Restore Point dulu (Search &gt; "Create a restore point").<br>
+    2. File .reg → klik kanan → Merge, lalu Yes. File .bat/.cmd → klik kanan → Run as administrator.<br>
+    3. Restart PC setelah import registry biar semua perubahan efektif.<br>
+    4. Kalau ada software kerja yang bermasalah setelah tweak, jalankan "Reset to Default" atau restore point.
+  </div>
+
+</main>
+
+<footer>
+  <span>ZVRA PERFORMANCE VALORANT — local toolkit, tidak mengirim data kemana pun.</span>
+  <span>Gunakan dengan tanggung jawab sendiri.</span>
+</footer>
+
+<script>
+const FILES = {
+'ValorantHighPriority.reg': `Windows Registry Editor Version 5.00\r\n\r\n[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\VALORANT-Win64-Shipping.exe\\PerfOptions]\r\n"CpuPriorityClass"=dword:00000003\r\n\r\nMADE BY ZVRA for Val S26A4\r\n`,
+
+'ValorantAboveNormalPriority.reg': `Windows Registry Editor Version 5.00\r\n\r\n[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\VALORANT-Win64-Shipping.exe\\PerfOptions]\r\n"CpuPriorityClass"=dword:00000006\r\n\r\nMADE BY ZVRA for Val S26A4\r\n`,
+
+'ValorantNormalPriority.reg': `Windows Registry Editor Version 5.00\r\n\r\n[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\VALORANT-Win64-Shipping.exe\\PerfOptions]\r\n"CpuPriorityClass"=dword:00000002\r\n\r\nMADE BY ZVRA for Val S26A4\r\n`,
+
+'Valorant_Optimization_Safe.reg': `Windows Registry Editor Version 5.00
+
+; ============================================================
+;  VALORANT / GAMING OPTIMIZATION SCRIPT (SAFE VERSION)
+;  Printer & Bluetooth TIDAK didisable
+; ============================================================
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games]
+"GPU Priority"=dword:00000008
+"Priority"=dword:00000006
+"Scheduling Category"="High"
+"SFIO Priority"="High"
+"Background Only"="False"
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl]
+"Win32PrioritySeparation"=dword:00000016
+
+[HKEY_CURRENT_USER\\System\\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+"GameDVR_FSEBehaviorMode"=dword:00000002
+"GameDVR_HonorUserFSEBehaviorMode"=dword:00000001
+"GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000001
+"GameDVR_EFSEFeatureFlags"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR]
+"AllowGameDVR"=dword:00000000
+
+[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize]
+"EnableTransparency"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XblGameSave]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XboxNetApiSvc]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XboxGipSvc]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XblAuthManager]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\MapsBroker]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\FontCache]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\FontCache3.0.0.0]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\stisvc]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\WerSvc]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\PcaSvc]
+"Start"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Wecsvc]
+"Start"=dword:00000004
+`,
+
+'Disable_Memory_Compression.cmd': `@echo off \r\necho Memory Compression by ZVRA\r\nPowerShell "Disable-MMAgent -MemoryCompression"\r\npause`,
+
+'Latency_Tweaks.cmd': `@echo off  \r\necho Latency Tweaks by ZVRA\r\necho Disable Dynamic Tick\r\necho Disable High Precision Event Timer (HPET)\r\necho Disable Synthetic Timers\r\n@echo \r\nbcdedit /set disabledynamictick yes\r\nbcdedit /deletevalue useplatformclock\r\nbcdedit /set useplatformtick yes\r\npause`,
+
+'Clean_Temporary_Files.bat': `@echo off\r\n@echo \r\n@echo.\r\n@echo Cache Cleaner by BareFox\r\n@echo Delete All Temporary Files?\r\n@echo.\r\npause\r\n\r\ncolor 2\r\nDel /S /F /Q %temp%\r\nDel /S /F /Q %Windir%\\Temp\r\nDel /S /F /Q C:\\WINDOWS\\Prefetch\r\n@echo.\r\n@echo All Temporary Files Sucessfully Deleted!\r\n@echo. \r\npause`,
+
+'Reset_to_Default.reg': `Windows Registry Editor Version 5.00\r\n\r\nMade by BareFox;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:3800000\r\n\r\n`
+};
+
+function downloadFile(name){
+  const content = FILES[name];
+  const blob = new Blob([content], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+const slider = document.getElementById('ramSlider');
+const label = document.getElementById('ramLabel');
+slider.addEventListener('input', () => label.textContent = slider.value);
+
+function downloadRam(){
+  const gb = parseInt(slider.value, 10);
+  const kb = gb * 1024 * 1024;
+  const content = `Windows Registry Editor Version 5.00\r\n\r\nMade by ZVRA;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:${kb}\r\n\r\n`;
+  const blob = new Blob([content], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `${gb}GB_Ram.reg`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
