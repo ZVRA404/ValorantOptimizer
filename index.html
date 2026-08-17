@@ -245,10 +245,100 @@
     .tool-head{flex-direction:column;}
     footer{flex-direction:column; align-items:flex-start;}
   }
+
+  /* ---- Gate overlay ---- */
+  body.gated{overflow:hidden;}
+  body.gated #siteContent{display:none;}
+  #gateOverlay{
+    position:fixed; inset:0; z-index:999;
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px; overflow-y:auto;
+  }
+  #gateOverlay.hidden{display:none;}
+  .gate-wrap{width:100%; max-width:440px;}
+  .gate-eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:3px;
+    color:var(--text-faint); text-transform:uppercase; text-align:center; margin-bottom:10px;
+  }
+  .gate-title{font-size:24px; font-weight:800; text-align:center; letter-spacing:-0.3px; margin-bottom:6px;}
+  .gate-sub{font-size:13.5px; color:var(--text-dim); text-align:center; margin-bottom:26px; line-height:1.6;}
+
+  .gate-panel{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px; margin-bottom:14px;}
+  .gate-step{display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .gate-step:last-child{border-bottom:none;}
+  .gate-check{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%;
+    border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center;
+    font-size:14px; transition:.2s;
+  }
+  .gate-check.done{background:var(--safe-bg); border-color:var(--safe); color:var(--safe);}
+  .gate-step-info{flex:1;}
+  .gate-step-info h3{font-size:14.5px; font-weight:600; margin-bottom:2px;}
+  .gate-step-info p{font-size:12px; color:var(--text-dim);}
+  .gate-step-btn{
+    font-family:'Inter', sans-serif; font-size:12.5px; font-weight:600; color:#fff;
+    border:none; border-radius:6px; padding:9px 16px; cursor:pointer; white-space:nowrap; transition:.15s;
+  }
+  .gate-step-btn.yt{background:#ff2d55;}
+  .gate-step-btn.yt:hover{background:#ff4d6d;}
+  .gate-step-btn.tt{background:#25252b; border:1px solid var(--line); color:var(--text);}
+  .gate-step-btn.tt:hover{background:#2f2f37;}
+  .gate-step-btn.done{background:var(--safe-bg); color:var(--safe); border:1px solid var(--safe-line); cursor:default;}
+
+  .gate-unlock-box{background:var(--warn-bg); border:1px solid var(--warn-line); border-radius:10px; padding:20px; text-align:center;}
+  .gate-unlock-box.ready{background:var(--safe-bg); border-color:var(--safe-line);}
+  .gate-unlock-status{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:1px;
+    color:var(--warn); text-transform:uppercase; margin-bottom:12px;
+  }
+  .gate-unlock-box.ready .gate-unlock-status{color:var(--safe);}
+  .gate-unlock-btn{
+    width:100%; font-family:'Inter', sans-serif; font-size:14.5px; font-weight:700;
+    padding:13px; border-radius:8px; border:none; cursor:not-allowed;
+    background:#2a2a30; color:var(--text-faint); transition:.2s;
+  }
+  .gate-unlock-btn.active{cursor:pointer; background:var(--safe); color:#0d1a0f;}
+  .gate-unlock-btn.active:hover{background:#82c797;}
+  .gate-honesty{font-size:11px; color:var(--text-faint); text-align:center; margin-top:16px; line-height:1.6;}
 </style>
 </head>
-<body>
+<body class="gated">
 
+<div id="gateOverlay">
+  <div class="gate-wrap">
+    <div class="gate-eyebrow">Sebelum Masuk</div>
+    <div class="gate-title">Subscribe &amp; Follow Dulu</div>
+    <p class="gate-sub">Toolkit ini gratis — sebagai gantinya, subscribe channel &amp; follow TikTok dulu ya. Setelah dua-duanya diklik, tombol Unlock aktif dan situsnya kebuka.</p>
+
+    <div class="gate-panel" id="gateStepsPanel">
+      <div class="gate-step">
+        <div class="gate-check" id="gateCheckYt">1</div>
+        <div class="gate-step-info">
+          <h3>Subscribe channel YouTube</h3>
+          <p>Buka channel &amp; subscribe, lalu balik ke tab ini</p>
+        </div>
+        <button class="gate-step-btn yt" id="gateBtnYt" onclick="gateMarkDone('yt')">Subscribe</button>
+      </div>
+      <div class="gate-step">
+        <div class="gate-check" id="gateCheckTt">2</div>
+        <div class="gate-step-info">
+          <h3>Follow TikTok</h3>
+          <p>Buka TikTok &amp; follow, lalu balik ke tab ini</p>
+        </div>
+        <button class="gate-step-btn tt" id="gateBtnTt" onclick="gateMarkDone('tt')">Follow</button>
+      </div>
+    </div>
+
+    <div class="gate-unlock-box" id="gateUnlockBox">
+      <div class="gate-unlock-status" id="gateUnlockStatus">0/2 selesai — belum bisa unlock</div>
+      <button class="gate-unlock-btn" id="gateUnlockBtn" onclick="gateUnlock()" disabled>🔒 Unlock Website</button>
+      <p class="gate-honesty">Ini honor-system — kami percaya kamu udah subscribe &amp; follow beneran. Gak ada verifikasi otomatis, karena TikTok emang gak punya cara buat website ngecek status follow orang lain.</p>
+    </div>
+  </div>
+</div>
+
+<div id="siteContent">
 <header>
   <div class="eyebrow">System Tuning Toolkit</div>
   <h1>ZVRA Performance Valorant</h1>
@@ -968,6 +1058,68 @@ function downloadRam(){
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+</script>
+
+</div><!-- /siteContent -->
+
+<script>
+  // GANTI 2 link ini sesuai channel & akun kamu
+  const GATE_YOUTUBE_URL = "https://www.youtube.com/@ziivora?sub_confirmation=1";
+  const GATE_TIKTOK_URL  = "https://www.tiktok.com/@zvrareal";
+
+  const gateState = { yt:false, tt:false };
+
+  function gateMarkDone(which){
+    if(which === 'yt'){
+      window.open(GATE_YOUTUBE_URL, '_blank');
+      gateState.yt = true;
+      document.getElementById('gateCheckYt').classList.add('done');
+      document.getElementById('gateCheckYt').textContent = '✓';
+      const b = document.getElementById('gateBtnYt');
+      b.textContent = 'Subscribed'; b.classList.add('done'); b.onclick = null;
+    } else {
+      window.open(GATE_TIKTOK_URL, '_blank');
+      gateState.tt = true;
+      document.getElementById('gateCheckTt').classList.add('done');
+      document.getElementById('gateCheckTt').textContent = '✓';
+      const b = document.getElementById('gateBtnTt');
+      b.textContent = 'Followed'; b.classList.add('done'); b.onclick = null;
+    }
+    gateUpdateStatus();
+  }
+
+  function gateUpdateStatus(){
+    const doneCount = (gateState.yt?1:0) + (gateState.tt?1:0);
+    const statusEl = document.getElementById('gateUnlockStatus');
+    const box = document.getElementById('gateUnlockBox');
+    const btn = document.getElementById('gateUnlockBtn');
+
+    if(doneCount === 2){
+      statusEl.textContent = '2/2 selesai — siap di-unlock';
+      box.classList.add('ready');
+      btn.disabled = false;
+      btn.classList.add('active');
+      btn.textContent = '🔓 Unlock Website';
+    } else {
+      statusEl.textContent = doneCount + '/2 selesai — belum bisa unlock';
+    }
+  }
+
+  function gateUnlock(){
+    document.getElementById('gateOverlay').classList.add('hidden');
+    document.body.classList.remove('gated');
+    try{ sessionStorage.setItem('zvra_unlocked', '1'); }catch(e){}
+  }
+
+  // Kalau di sesi browser ini udah pernah unlock, langsung tampilkan konten
+  (function(){
+    try{
+      if(sessionStorage.getItem('zvra_unlocked') === '1'){
+        document.getElementById('gateOverlay').classList.add('hidden');
+        document.body.classList.remove('gated');
+      }
+    }catch(e){}
+  })();
 </script>
 
 </body>
