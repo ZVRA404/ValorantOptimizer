@@ -3,394 +3,448 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZVRA PERFORMANCE VALORANT</title>
+<title>ZVRA Performance Valorant</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root{
-    --bg: #0a0509;
-    --bg-panel: #140d16;
-    --bg-card: #1a1120;
-    --line: #2c1f33;
-    --red: #ff3b5c;
-    --red-dim: #6e1a2c;
-    --purple: #a855f7;
-    --purple-dim: #4c1d6b;
-    --grey: #8b8594;
-    --text: #e8e2ec;
-    --text-dim: #837c8f;
-    --ok: #4ade80;
-    --warn-bg: rgba(255,59,92,0.07);
+    --bg: #0d0d0f;
+    --panel: #16161a;
+    --card: #1c1c21;
+    --card2: #1f1f25;
+    --line: #2a2a30;
+    --text: #e4e4e7;
+    --text-dim: #8a8a92;
+    --text-faint: #58585f;
+    --accent: #c9c9d1;
+    --warn: #d9a94a;
+    --warn-bg: #211c11;
+    --warn-line: #423721;
+    --safe: #6fb583;
+    --safe-bg: #131d15;
+    --safe-line: #223a27;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
   body{
-    background:
-      radial-gradient(ellipse 800px 500px at 15% -5%, rgba(168,85,247,0.10), transparent),
-      radial-gradient(ellipse 700px 500px at 100% 15%, rgba(255,59,92,0.08), transparent),
-      linear-gradient(180deg, #0a0509, #0c070d 60%, #0a0509),
-      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(168,85,247,0.025) 40px);
+    background:var(--bg);
     color:var(--text);
-    font-family:'Rajdhani', sans-serif;
+    font-family:'Inter', sans-serif;
     min-height:100vh;
+    line-height:1.5;
   }
-  .scanline{
-    position:fixed; inset:0; pointer-events:none; z-index:50;
-    background: repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 2px);
-    mix-blend-mode: overlay;
-  }
-  ::selection{background:var(--red); color:#0a0509;}
 
   header{
     border-bottom:1px solid var(--line);
-    padding:32px 6vw 26px;
-    position:relative;
-    overflow:hidden;
-  }
-  header::before{
-    content:"";
-    position:absolute; left:0; top:0; bottom:0; width:4px;
-    background:linear-gradient(180deg, var(--red), var(--purple));
-    box-shadow:0 0 22px var(--red);
+    padding:40px 6vw 32px;
   }
   .eyebrow{
     font-family:'JetBrains Mono', monospace;
-    font-size:11px; letter-spacing:4px; color:var(--red);
-    text-transform:uppercase; margin-bottom:10px;
+    font-size:11px; letter-spacing:3px; color:var(--text-faint);
+    text-transform:uppercase; margin-bottom:12px;
   }
   h1{
-    font-size:clamp(32px,5vw,58px);
+    font-size:clamp(28px,4vw,42px);
     font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    line-height:1;
-    background:linear-gradient(90deg, var(--text) 55%, var(--purple));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  h1 span{
-    background:linear-gradient(90deg, var(--red), #ff7a8f);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+    letter-spacing:-0.5px;
   }
   .subtitle{
     color:var(--text-dim);
-    font-size:16px;
-    margin-top:14px;
-    max-width:660px;
+    font-size:15px;
+    margin-top:10px;
+    max-width:560px;
   }
-  .status-row{
-    display:flex; gap:22px; margin-top:22px; flex-wrap:wrap;
-    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim);
-  }
-  .status-row b{color:var(--ok);}
-  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
 
-  main{max-width:1180px; margin:0 auto; padding:48px 6vw 100px;}
+  main{max-width:1080px; margin:0 auto; padding:44px 6vw 90px;}
 
   .section-label{
     font-family:'JetBrains Mono', monospace;
-    font-size:12px; letter-spacing:3px; color:var(--purple);
+    font-size:11px; letter-spacing:2px; color:var(--text-faint);
     text-transform:uppercase;
-    display:flex; align-items:center; gap:12px;
-    margin-bottom:18px;
+    margin-bottom:14px;
   }
-  .section-label::after{content:""; flex:1; height:1px; background:var(--line);}
 
   .panel{
-    background:linear-gradient(160deg, var(--bg-panel), #100a13);
+    background:var(--panel);
     border:1px solid var(--line);
-    padding:26px 28px;
-    margin-bottom:28px;
-    position:relative;
+    border-radius:8px;
+    padding:24px 26px;
+    margin-bottom:24px;
   }
   .panel h2{
-    font-size:20px; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;
+    font-size:16.5px; font-weight:600; margin-bottom:6px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
   }
-  .panel p.desc{color:var(--text-dim); font-size:14.5px; margin-bottom:20px; max-width:660px;}
+  .panel p.desc{color:var(--text-dim); font-size:13.5px; margin-bottom:18px; max-width:600px;}
 
-  /* RAM Selector */
-  .ram-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  /* ---- Warning intro panel ---- */
+  .warn-panel{
+    background:var(--warn-bg);
+    border:1px solid var(--warn-line);
+    border-radius:8px;
+    padding:22px 24px;
+    margin-bottom:32px;
+  }
+  .warn-panel h2{
+    font-size:14px; font-weight:700; color:var(--warn);
+    letter-spacing:0.3px; margin-bottom:16px;
+  }
+  .warn-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:16px 22px;
+  }
+  .warn-item{display:flex; gap:10px; align-items:flex-start;}
+  .warn-num{
+    flex-shrink:0; width:20px; height:20px; border-radius:50%;
+    background:rgba(217,169,74,0.12); border:1px solid var(--warn-line); color:var(--warn);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700;
+    margin-top:1px;
+  }
+  .warn-item p{font-size:12.5px; color:var(--text-dim); line-height:1.55;}
+  .warn-item p b{color:var(--text); font-weight:600;}
+
+  /* ---- RAM slider ---- */
+  .ram-row{display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
   .ram-value{
     font-family:'JetBrains Mono', monospace;
-    font-size:40px; font-weight:700; color:var(--red);
-    min-width:130px;
+    font-size:30px; font-weight:700; color:var(--text);
+    min-width:80px;
   }
   input[type=range]{
-    -webkit-appearance:none; flex:1; min-width:220px; height:4px;
-    background:linear-gradient(90deg, var(--red), var(--purple));
-    outline:none; border-radius:2px; opacity:0.5;
+    -webkit-appearance:none; flex:1; min-width:200px; height:3px;
+    background:var(--line); outline:none; border-radius:2px;
   }
-  input[type=range]:hover{opacity:0.8;}
   input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none; width:18px; height:18px; border-radius:3px;
-    background:var(--text); cursor:pointer; box-shadow:0 0 10px var(--purple);
+    -webkit-appearance:none; width:15px; height:15px; border-radius:50%;
+    background:var(--accent); cursor:pointer;
   }
   input[type=range]::-moz-range-thumb{
-    width:18px; height:18px; border-radius:3px; border:none;
-    background:var(--text); cursor:pointer; box-shadow:0 0 10px var(--purple);
-  }
-  .ram-hint{
-    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim);
-    margin-top:14px; line-height:1.6;
+    width:15px; height:15px; border-radius:50%; border:none;
+    background:var(--accent); cursor:pointer;
   }
 
   .btn{
-    font-family:'JetBrains Mono', monospace;
-    font-size:13px; letter-spacing:1.5px; text-transform:uppercase;
-    background:transparent; color:var(--text);
-    border:1px solid var(--red); padding:13px 22px;
+    font-family:'Inter', sans-serif;
+    font-size:13px; font-weight:600;
+    background:var(--card); color:var(--text);
+    border:1px solid var(--line); border-radius:5px;
+    padding:10px 18px;
     cursor:pointer; transition:.15s; white-space:nowrap;
   }
-  .btn:hover{background:var(--red); color:#0a0509; box-shadow:0 0 18px var(--red-dim);}
-  .btn.primary{background:linear-gradient(90deg, var(--red), #ff5c7a); color:#0a0509; border-color:transparent;}
-  .btn.primary:hover{filter:brightness(1.1); box-shadow:0 0 22px var(--red-dim);}
-  .btn.ghost{border-color:var(--line); color:var(--text-dim);}
-  .btn.ghost:hover{border-color:var(--purple); color:var(--purple); background:transparent; box-shadow:0 0 14px rgba(168,85,247,0.25);}
-  .btn.purple{border-color:var(--purple); color:var(--text);}
-  .btn.purple:hover{background:var(--purple); color:#0a0509; box-shadow:0 0 18px var(--purple-dim);}
+  .btn:hover{background:#26262c; border-color:#3a3a42;}
+  .btn.primary{background:var(--accent); color:#0d0d0f; border-color:transparent;}
+  .btn.primary:hover{background:#ffffff;}
 
-  /* Priority grid */
-  .grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;}
+  .grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px;}
   .card{
-    border:1px solid var(--line); padding:20px; background:var(--bg-card);
-    display:flex; flex-direction:column; gap:10px;
+    border:1px solid var(--line); border-radius:6px; padding:18px; background:var(--card);
+    display:flex; flex-direction:column; gap:8px;
   }
-  .card .tag{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim); letter-spacing:2px;}
-  .card h3{font-size:19px; text-transform:uppercase;}
-  .card .note{font-size:13px; color:var(--text-dim); flex:1; line-height:1.55;}
-  .card .impact{
-    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:1px;
-    padding:6px 10px; border-radius:2px; width:fit-content; margin-top:2px;
-  }
-  .impact.low{color:var(--ok); border:1px solid rgba(74,222,128,0.35); background:rgba(74,222,128,0.06);}
-  .impact.med{color:#facc15; border:1px solid rgba(250,204,21,0.35); background:rgba(250,204,21,0.06);}
+  .card .tag{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-faint); letter-spacing:1.5px;}
+  .card h3{font-size:16px; font-weight:600;}
+  .card .note{font-size:12.5px; color:var(--text-dim); flex:1;}
 
-  /* Tool list */
+  /* ---- Tool rows ---- */
   .tool-row{
-    padding:20px 0; border-bottom:1px solid var(--line);
+    padding:18px 0; border-bottom:1px solid var(--line);
   }
   .tool-row:last-child{border-bottom:none;}
   .tool-head{
-    display:flex; justify-content:space-between; align-items:center;
-    gap:20px; flex-wrap:wrap; margin-bottom:10px;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:16px; flex-wrap:wrap;
   }
-  .tool-info h3{font-size:17px; text-transform:uppercase; margin-bottom:4px; display:flex; align-items:center; gap:10px;}
-  .tool-info > p{font-size:13.5px; color:var(--text-dim); max-width:620px;}
+  .tool-info h3{
+    font-size:14.5px; font-weight:600; margin-bottom:4px;
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  }
+  .tool-info p{font-size:12.5px; color:var(--text-dim); max-width:520px;}
+
+  .risk-pill{
+    font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:0.4px;
+    padding:2.5px 8px; border-radius:20px; font-weight:600; white-space:nowrap;
+  }
+  .risk-low{color:var(--safe); background:var(--safe-bg); border:1px solid var(--safe-line);}
+  .risk-mid{color:var(--warn); background:var(--warn-bg); border:1px solid var(--warn-line);}
+
+  details{margin-top:10px;}
+  summary{
+    font-size:11.5px; color:var(--text-faint); cursor:pointer;
+    font-family:'JetBrains Mono', monospace; letter-spacing:0.5px;
+    list-style:none; display:inline-flex; align-items:center; gap:6px;
+    padding:4px 0; transition:color .15s;
+  }
+  summary:hover{color:var(--text-dim);}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{
+    content:"+"; display:inline-flex; align-items:center; justify-content:center;
+    width:15px; height:15px; border-radius:50%; border:1px solid var(--line);
+    font-size:11px; flex-shrink:0;
+  }
+  details[open] summary::before{content:"−";}
+
   .tool-details{
-    font-size:13px; color:var(--text-dim); line-height:1.7;
-    background:#0d080f; border:1px solid var(--line); border-left:2px solid var(--purple);
-    padding:12px 16px; margin-top:4px; max-width:720px;
+    margin-top:10px;
+    background:var(--card2);
+    border:1px solid var(--line);
+    border-left:2px solid var(--accent);
+    border-radius:0 6px 6px 0;
+    padding:14px 16px;
+    max-width:620px;
   }
-  .tool-details b{color:var(--text);}
-  .tool-details .row{margin-bottom:4px;}
-  .tool-details .row:last-child{margin-bottom:0;}
-  .impact-pill{
-    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:1px;
-    padding:3px 9px; border-radius:2px; text-transform:uppercase;
+  .tool-details .row{
+    display:flex; gap:12px; padding:6px 0;
   }
-  .impact-pill.low{color:var(--ok); border:1px solid rgba(74,222,128,0.35); background:rgba(74,222,128,0.06);}
-  .impact-pill.med{color:#facc15; border:1px solid rgba(250,204,21,0.35); background:rgba(250,204,21,0.06);}
+  .tool-details .row + .row{border-top:1px solid var(--line);}
+  .tool-details .row .label{
+    flex-shrink:0; width:64px;
+    font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.5px;
+    color:var(--text-faint); text-transform:uppercase; padding-top:1px;
+  }
+  .tool-details .row .val{font-size:12.5px; color:var(--text-dim); line-height:1.55;}
+  .tool-details .row .val b{color:var(--text); font-weight:600;}
 
-  .warn{
-    border:1px solid var(--red-dim); background:var(--warn-bg);
-    padding:18px 20px; font-size:13.5px; color:#ffb3c0; margin-top:18px;
-    font-family:'JetBrains Mono', monospace; line-height:1.7;
+  .note-box{
+    border:1px solid var(--line); border-radius:8px;
+    padding:16px 18px; margin-top:14px; font-size:13px;
+    color:var(--text-dim); line-height:1.6;
   }
-  .warn b{color:var(--red);}
-
-  .excluded{
-    border:1px dashed #3a2340; padding:18px 20px; margin-top:12px;
-    color:var(--text-dim); font-size:13.5px; line-height:1.7;
-  }
-  .excluded b{color:var(--red);}
+  .note-box b{color:var(--text);}
 
   footer{
-    border-top:1px solid var(--line); padding:26px 6vw;
-    font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--text-dim);
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    border-top:1px solid var(--line); padding:22px 6vw;
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--text-faint);
   }
 
   @media (max-width:640px){
-    .status-row{gap:14px;}
-    header{padding:26px 5vw 20px;}
-    main{padding:36px 5vw 80px;}
-    .tool-head{flex-direction:column; align-items:flex-start;}
+    header{padding:32px 5vw 24px;}
+    main{padding:32px 5vw 70px;}
+    .tool-head{flex-direction:column;}
   }
 </style>
 </head>
 <body>
-<div class="scanline"></div>
 
 <header>
-  <div class="eyebrow">// SYSTEM TUNING TOOLKIT</div>
-  <h1>ZVRA<span> PERFORMANCE</span><br>VALORANT</h1>
-  <p class="subtitle">Kumpulan registry &amp; script tweak buat setup Windows sebelum ranked. Tiap tools ada penjelasan apa yang dia ubah dan seberapa besar dampaknya — biar gak asal klik.</p>
-  <div class="status-row">
-    <div><span class="dot"></span>18 script siap pakai</div>
-    <div>PRIORITY TUNER · <b>ONLINE</b></div>
-    <div>RAM RANGE · 1GB&ndash;32GB</div>
-  </div>
+  <div class="eyebrow">System Tuning Toolkit</div>
+  <h1>ZVRA Performance Valorant</h1>
+  <p class="subtitle">Kumpulan tweak Windows buat setup sebelum main. Klik detail di tiap tool sebelum jalanin kalau belum yakin.</p>
 </header>
 
 <main>
 
-  <!-- RAM SECTION -->
-  <div class="section-label">01 // Svchost RAM Threshold</div>
+  <div class="warn-panel">
+    <h2>⚠ Baca dulu sebelum download</h2>
+    <div class="warn-grid">
+      <div class="warn-item">
+        <div class="warn-num">1</div>
+        <p><b>Pilih sesuai kebutuhan</b> — bukan download semua lalu jalanin semua.</p>
+      </div>
+      <div class="warn-item">
+        <div class="warn-num">2</div>
+        <p><b>Buka "Detail"</b> tiap tool dulu sebelum download, biar tau efeknya.</p>
+      </div>
+      <div class="warn-item">
+        <div class="warn-num">3</div>
+        <p><b>Buat System Restore Point</b> dulu, biar gampang dibalikin kalau aneh.</p>
+      </div>
+      <div class="warn-item">
+        <div class="warn-num">4</div>
+        <p><b>.reg</b> → klik kanan → Merge. <b>.cmd/.bat</b> → Run as administrator.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">RAM Threshold</div>
   <div class="panel">
-    <h2>Sesuaikan Dengan RAM Kamu</h2>
-    <p class="desc">Geser slider sesuai kapasitas RAM fisik PC kamu, lalu download. File ini mengatur <b style="color:var(--text)">SvcHostSplitThresholdInKB</b> — nilai yang menentukan kapan Windows memecah proses <code>svchost.exe</code> jadi beberapa proses terpisah berdasarkan RAM yang tersedia.</p>
+    <h2>Svchost Split Threshold</h2>
+    <p class="desc">Mengelompokkan proses <code>svchost.exe</code> berdasarkan RAM fisik PC — efeknya kecil, bukan tweak buat naikin FPS drastis, tapi aman. Geser sesuai RAM kamu (cek di Task Manager → Performance), download, lalu restart.</p>
     <div class="ram-row">
       <div class="ram-value"><span id="ramLabel">16</span>GB</div>
       <input type="range" id="ramSlider" min="1" max="32" value="16">
       <button class="btn primary" onclick="downloadRam()">Download .reg</button>
     </div>
-    <div class="ram-hint">
-      ℹ Pilih angka <b style="color:var(--text)">SESUAI RAM ASLI</b> kamu (cek di Task Manager → Performance → Memory). Salah pilih (misal PC 8GB tapi pilih 32GB) gak akan merusak apa-apa, tapi manfaatnya jadi gak sesuai — Windows bakal salah kalkulasi kapan harus split proses.
-    </div>
   </div>
 
-  <!-- PRIORITY SECTION -->
-  <div class="section-label">02 // Valorant Process Priority</div>
+  <div class="section-label">Valorant Process Priority</div>
   <div class="panel">
-    <h2>Prioritas CPU Untuk Valorant</h2>
-    <p class="desc">Atur prioritas proses <code>VALORANT-Win64-Shipping.exe</code> di Windows. Semakin tinggi prioritas, semakin didahulukan CPU-nya dibanding proses lain yang jalan bersamaan.</p>
+    <h2>Prioritas CPU</h2>
+    <p class="desc">Atur prioritas proses Valorant dibanding proses lain. <b>Pilih salah satu saja</b> — yang terakhir kamu merge itu yang berlaku.</p>
     <div class="grid3">
       <div class="card">
-        <span class="tag">MAX AGGRESSIVE</span>
+        <span class="tag">AGGRESSIVE</span>
         <h3>High</h3>
-        <p class="note">Prioritas paling tinggi. Valorant selalu didahulukan CPU. Efeknya: proses lain (Discord, browser, OBS) bisa sedikit nge-lag/tersendat saat main.</p>
-        <span class="impact med">DAMPAK: SEDANG</span>
+        <p class="note">Prioritas maksimal. Aplikasi lain (Discord, browser) bisa sedikit tersendat.</p>
         <button class="btn" onclick="downloadFile('ValorantHighPriority.reg')">Download</button>
       </div>
       <div class="card">
         <span class="tag">RECOMMENDED</span>
         <h3>Above Normal</h3>
-        <p class="note">Valorant diprioritaskan sedikit di atas normal, tapi aplikasi lain tetap jalan lancar bareng. Paling seimbang buat kebanyakan orang.</p>
-        <span class="impact low">DAMPAK: RINGAN</span>
+        <p class="note">Seimbang, gak ganggu aplikasi lain. Mulai dari sini kalau gak yakin.</p>
         <button class="btn" onclick="downloadFile('ValorantAboveNormalPriority.reg')">Download</button>
       </div>
       <div class="card">
         <span class="tag">DEFAULT</span>
         <h3>Normal</h3>
-        <p class="note">Balikin prioritas Valorant ke standar Windows — sama kayak aplikasi lain. Pakai ini kalau mau reset ke kondisi awal.</p>
-        <span class="impact low">RESET / DEFAULT</span>
+        <p class="note">Balikin ke prioritas standar Windows (undo).</p>
         <button class="btn" onclick="downloadFile('ValorantNormalPriority.reg')">Download</button>
       </div>
     </div>
   </div>
 
-  <!-- SYSTEM TOOLS -->
-  <div class="section-label">03 // System Tools</div>
+  <div class="section-label">Valorant Display &amp; Graphics Settings</div>
   <div class="panel">
-    <h2>Tweak &amp; Cleanup</h2>
-    <p class="desc">Tools tambahan buat bebersih sistem dan kurangi latency. Setiap tool dijelaskan: apa yang diubah, kenapa bisa bantu performa, dan hal yang perlu diperhatikan sebelum jalanin.</p>
+    <h2>Auto-Apply GameUserSettings.ini <span class="risk-pill risk-mid">TIMPA FILE SETTING</span></h2>
+    <p class="desc">Set otomatis: resolusi 1920×1080, VSync off, semua grafik di posisi terendah — setup umum buat FPS maksimal. File lama otomatis di-backup sebelum ditimpa.</p>
+    <button class="btn primary" onclick="downloadFile('Apply_Valorant_Settings.cmd')">Download .cmd</button>
+    <details>
+      <summary>Detail</summary>
+      <div class="tool-details">
+        <div class="row"><div class="label">Apa itu</div><div class="val">Nulis ulang file setting grafis Valorant sesuai konfigurasi di atas.</div></div>
+        <div class="row"><div class="label">Wajib</div><div class="val"><b>Tutup total Valorant &amp; Riot Client dulu</b> sebelum jalanin, kalau tidak game bisa nimpa balik.</div></div>
+        <div class="row"><div class="label">Risiko</div><div class="val">Rendah — file lama otomatis dibackup (<code>.bak</code>). Kalau resolusi/monitor jadi aneh, atur ulang manual di Settings → Video dalam game.</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section-label">Power Plan</div>
+  <div class="panel">
+    <h2>Ultimate Performance <span class="risk-pill risk-mid">LAPTOP: HATI-HATI</span></h2>
+    <p class="desc">Aktifkan power plan tersembunyi Windows yang matiin hampir semua power-saving, biar hardware selalu di performa penuh.</p>
+    <button class="btn" onclick="downloadFile('Enable_Ultimate_Performance.cmd')">Download .cmd</button>
+    <details>
+      <summary>Detail</summary>
+      <div class="tool-details">
+        <div class="row"><div class="label">Apa itu</div><div class="val">Duplikat &amp; aktifkan plan "Ultimate Performance" bawaan Windows.</div></div>
+        <div class="row"><div class="label">Laptop</div><div class="val">Baterai lebih boros &amp; lebih panas — pakai cuma kalau dicolok charger terus.</div></div>
+        <div class="row"><div class="label">Undo</div><div class="val">Buka Control Panel → Power Options, pilih plan "Balanced" lagi.</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section-label">System Tools</div>
+  <div class="panel">
 
     <div class="tool-row">
       <div class="tool-head">
         <div class="tool-info">
-          <h3>Performance Options + Background Apps + Game Mode <span class="impact-pill low">DAMPAK: RINGAN</span></h3>
-          <p>3-in-1: visual effect Windows, izin app background, dan Game Mode.</p>
+          <h3>Performance + Background Apps + Game Mode <span class="risk-pill risk-mid">UBAH TAMPILAN</span></h3>
+          <p>Matiin efek visual Windows, blokir app background, nyalain Game Mode. Tampilan Windows jadi lebih polos.</p>
         </div>
         <button class="btn" onclick="downloadFile('Performance_And_Game_Mode.reg')">Download .reg</button>
       </div>
-      <div class="tool-details">
-        <div class="row"><b>Apa yang diubah:</b> Visual Effects Windows di-set ke "Adjust for best performance" (matiin animasi jendela, fade menu, shadow, dll) tapi tetap nyalain "Show thumbnails" & "Smooth edges of screen fonts" biar tampilan gak terlalu kasar. "Let Windows apps run in background" di-set jadi <b>Force Deny</b> (app UWP gak boleh jalan diam-diam di background). Transparency effects dimatikan. Game Mode diaktifkan otomatis.</div>
-        <div class="row"><b>Kenapa bantu:</b> Kurangi kerja GPU/CPU buat render efek visual yang gak penting pas main, dan cegah app latar belakang makan resource CPU/RAM diam-diam.</div>
-        <div class="row"><b>Perlu tau:</b> Setelah merge, <b>sign out atau restart</b> dulu baru kelihatan efeknya. Force Deny background apps bisa bikin notifikasi dari app UWP tertentu (misal app Store) telat muncul — kalau kepake buat kerja, ini biasanya gak masalah.</div>
-      </div>
+      <details>
+        <summary>Detail</summary>
+        <div class="tool-details">
+          <div class="row"><div class="label">Apa itu</div><div class="val">Matiin animasi/transparency, blokir app UWP jalan di background, aktifkan Game Mode.</div></div>
+          <div class="row"><div class="label">Kenapa</div><div class="val">Kurangi beban CPU/GPU dari efek visual &amp; app yang diam-diam jalan di belakang.</div></div>
+          <div class="row"><div class="label">Risiko</div><div class="val">App Store (kalender, notifikasi) mungkin telat update. <b>Perlu restart</b> setelah merge.</div></div>
+        </div>
+      </details>
     </div>
 
     <div class="tool-row">
       <div class="tool-head">
         <div class="tool-info">
-          <h3>Valorant Safe Optimization <span class="impact-pill low">DAMPAK: RINGAN</span></h3>
-          <p>Game priority, disable Game DVR, transparency, Xbox services.</p>
+          <h3>Valorant Safe Optimization <span class="risk-pill risk-low">AMAN</span></h3>
+          <p>Game priority, disable Game DVR, transparency, Xbox services. Tweak inti buat Valorant.</p>
         </div>
         <button class="btn" onclick="downloadFile('Valorant_Optimization_Safe.reg')">Download .reg</button>
       </div>
-      <div class="tool-details">
-        <div class="row"><b>Apa yang diubah:</b> Naikkan prioritas GPU/CPU untuk task game di Windows, matikan Game DVR (perekam Xbox Game Bar) dan transparency effect, serta men-disable 4 service Xbox Live yang gak kepake kalau kamu gak main lewat Xbox app (XblGameSave, XboxNetApiSvc, XboxGipSvc, XblAuthManager) plus beberapa service kecil (Font Cache duplikat, WIA scanner, Error Reporting, Compatibility Assistant, Event Collector, Maps Broker).</div>
-        <div class="row"><b>Kenapa bantu:</b> Mengurangi overhead recording di background dan bebasin sedikit resource dari service yang jarang kepake.</div>
-        <div class="row"><b>Perlu tau:</b> <b>Printer &amp; Bluetooth TIDAK disentuh</b> — aman buat yang masih pakai keduanya untuk kerja. Kalau kamu pakai scanner (WIA) atau butuh Windows Error Reporting buat debug software kerja, edit dulu file ini sebelum di-merge (hapus section terkait).</div>
-      </div>
+      <details>
+        <summary>Detail</summary>
+        <div class="tool-details">
+          <div class="row"><div class="label">Apa itu</div><div class="val">Naikkan prioritas GPU/CPU game, matikan Game DVR &amp; transparency, matikan service Xbox yang jarang kepakai.</div></div>
+          <div class="row"><div class="label">Kenapa</div><div class="val">Game DVR &amp; service Xbox makan resource walau gak dipakai.</div></div>
+          <div class="row"><div class="label">Risiko</div><div class="val">Sangat rendah — printer &amp; Bluetooth gak disentuh, aman dipakai sambil kerja.</div></div>
+        </div>
+      </details>
     </div>
 
     <div class="tool-row">
       <div class="tool-head">
         <div class="tool-info">
-          <h3>Disable Memory Compression <span class="impact-pill med">DAMPAK: SEDANG</span></h3>
-          <p>Matikan fitur kompresi RAM bawaan Windows.</p>
+          <h3>Disable Memory Compression <span class="risk-pill risk-mid">CEK RAM DULU</span></h3>
+          <p>Matikan kompresi RAM Windows. Cek RAM kamu dulu di Task Manager sebelum pakai.</p>
         </div>
         <button class="btn" onclick="downloadFile('Disable_Memory_Compression.cmd')">Download .cmd</button>
       </div>
-      <div class="tool-details">
-        <div class="row"><b>Apa yang diubah:</b> Menjalankan <code>Disable-MMAgent -MemoryCompression</code> lewat PowerShell — mematikan fitur Windows yang otomatis mengompresi data di RAM biar muat lebih banyak.</div>
-        <div class="row"><b>Kenapa bantu:</b> Kompresi RAM makan sedikit CPU tiap saat. Di PC dengan RAM besar (16GB ke atas), mematikannya bisa sedikit ringankan CPU karena gak perlu kompres/dekompres data terus-menerus.</div>
-        <div class="row"><b>Perlu tau:</b> <b>Kalau RAM kamu di bawah 8GB, JANGAN pakai ini</b> — RAM kamu justru bakal lebih cepat penuh karena data gak dikompres lagi, dan malah bikin PC lag karena sering swap ke disk. Perlu klik "Yes" di prompt UAC (run as administrator).</div>
-      </div>
+      <details>
+        <summary>Detail</summary>
+        <div class="tool-details">
+          <div class="row"><div class="label">Apa itu</div><div class="val">Matikan fitur Windows yang otomatis kompres data di RAM.</div></div>
+          <div class="row"><div class="label">Kenapa</div><div class="val">Ringankan CPU di PC dengan RAM besar (16GB+), gak perlu compress/decompress terus.</div></div>
+          <div class="row"><div class="label">Risiko</div><div class="val"><b>Jangan pakai kalau RAM di bawah 8GB</b> — RAM lebih cepat penuh, malah bikin lag.</div></div>
+        </div>
+      </details>
     </div>
 
     <div class="tool-row">
       <div class="tool-head">
         <div class="tool-info">
-          <h3>Latency Tweaks <span class="impact-pill med">DAMPAK: SEDANG</span></h3>
-          <p>Disable Dynamic Tick &amp; HPET, aktifkan platform tick.</p>
+          <h3>Latency Tweaks <span class="risk-pill risk-mid">UBAH BOOT CONFIG</span></h3>
+          <p>Disable Dynamic Tick &amp; HPET. Mengubah konfigurasi boot Windows, bukan setting biasa.</p>
         </div>
         <button class="btn" onclick="downloadFile('Latency_Tweaks.cmd')">Download .cmd</button>
       </div>
-      <div class="tool-details">
-        <div class="row"><b>Apa yang diubah:</b> Lewat <code>bcdedit</code>, mematikan Dynamic Tick (fitur hemat daya CPU yang bikin timer sistem gak konsisten) dan mengganti sumber clock sistem dari HPET ke platform clock (biasanya TSC di CPU modern, lebih presisi &amp; rendah latency).</div>
-        <div class="row"><b>Kenapa bantu:</b> Timer sistem yang lebih presisi bisa bantu konsistensi frame time / input latency, terutama di CPU modern.</div>
-        <div class="row"><b>Perlu tau:</b> Ini mengubah <b>boot configuration</b>, jadi <b>WAJIB restart PC</b> setelah dijalankan biar efektif. Kalau setelah restart PC berasa aneh (jarang terjadi di CPU modern, tapi bisa di hardware lama), jalankan Command Prompt (as admin) dan ketik <code>bcdedit /deletevalue useplatformtick</code> lalu <code>bcdedit /set disabledynamictick no</code> buat balikin.</div>
-      </div>
+      <details>
+        <summary>Detail</summary>
+        <div class="tool-details">
+          <div class="row"><div class="label">Apa itu</div><div class="val">Ganti sumber clock/timer sistem biar lebih presisi.</div></div>
+          <div class="row"><div class="label">Kenapa</div><div class="val">Bisa kurangi micro-stutter di sebagian sistem — efeknya beda-beda tiap hardware.</div></div>
+          <div class="row"><div class="label">Risiko</div><div class="val">Ubah boot config lewat <code>bcdedit</code>. <b>Wajib restart</b> setelah dijalankan.</div></div>
+        </div>
+      </details>
     </div>
 
     <div class="tool-row">
       <div class="tool-head">
         <div class="tool-info">
-          <h3>Clean Temporary Files <span class="impact-pill low">DAMPAK: RINGAN, AMAN</span></h3>
-          <p>Hapus folder Temp, Windows Temp, dan Prefetch.</p>
+          <h3>Clean Temporary Files <span class="risk-pill risk-low">AMAN</span></h3>
+          <p>Hapus folder Temp, Windows Temp, Prefetch. Cuma bersih file sampah, gak ubah setting apapun.</p>
         </div>
         <button class="btn" onclick="downloadFile('Clean_Temporary_Files.bat')">Download .bat</button>
       </div>
-      <div class="tool-details">
-        <div class="row"><b>Apa yang diubah:</b> Menghapus semua isi folder <code>%temp%</code>, <code>Windows\Temp</code>, dan <code>Windows\Prefetch</code>.</div>
-        <div class="row"><b>Kenapa bantu:</b> Bebasin ruang disk dan bersihin file sampah aplikasi. Prefetch akan otomatis dibuat ulang Windows seiring waktu, jadi aman dihapus.</div>
-        <div class="row"><b>Perlu tau:</b> Paling aman dari semua tools di sini — bisa dijalankan kapan saja tanpa perlu restart. Ada konfirmasi "pause" sebelum eksekusi, jadi kamu masih bisa cancel (Ctrl+C) kalau berubah pikiran.</div>
-      </div>
     </div>
 
     <div class="tool-row">
       <div class="tool-head">
         <div class="tool-info">
-          <h3>Reset to Default <span class="impact-pill low">RESET / SAFETY NET</span></h3>
-          <p>Balikin SvcHostSplitThresholdInKB ke nilai default Windows.</p>
+          <h3>Reset ALL to Default <span class="risk-pill risk-low">UNDO</span></h3>
+          <p>Balikin semua tweak registry di atas ke default. Pakai kalau mau mundurin semua sekaligus.</p>
         </div>
-        <button class="btn ghost" onclick="downloadFile('Reset_to_Default.reg')">Download .reg</button>
+        <button class="btn" onclick="downloadFile('Reset_ALL_to_Default.reg')">Download .reg</button>
       </div>
-      <div class="tool-details">
-        <div class="row"><b>Apa yang diubah:</b> Mengembalikan <code>SvcHostSplitThresholdInKB</code> ke nilai default bawaan Windows (bukan berdasarkan RAM kamu).</div>
-        <div class="row"><b>Kapan dipakai:</b> Kalau setelah pakai salah satu file RAM (bagian 01) ada yang berasa aneh atau kamu mau balik ke kondisi awal sebelum pernah pakai toolkit ini.</div>
+      <details>
+        <summary>Detail</summary>
+        <div class="tool-details">
+          <div class="row"><div class="label">Meliputi</div><div class="val">RAM threshold, priority Valorant, Valorant Safe Optimization, Performance/Game Mode.</div></div>
+          <div class="row"><div class="label">Gak termasuk</div><div class="val">Latency Tweaks &amp; Memory Compression bukan registry — cara reset ada di komentar dalam file (buka pakai Notepad).</div></div>
+        </div>
+      </details>
+    </div>
+
+    <div class="tool-row">
+      <div class="tool-head">
+        <div class="tool-info">
+          <h3>Reset to Default (RAM saja) <span class="risk-pill risk-low">UNDO</span></h3>
+          <p>Balikin threshold RAM saja ke default, tanpa nyentuh tweak lain.</p>
+        </div>
+        <button class="btn" onclick="downloadFile('Reset_to_Default.reg')">Download .reg</button>
       </div>
     </div>
+
   </div>
 
-  <div class="excluded">
-    <b>DILEWATI DARI TOOLKIT:</b> <b>Disable Process Mitigation</b> gak dimasukkin. Script itu mematikan hampir semua proteksi exploit Windows (DEP, CFG, SEHOP, dll) di seluruh sistem — bukan cuma buat Valorant. Resikonya ke keamanan PC (rentan malware/exploit) jauh lebih besar daripada gain performa yang nyaris gak berasa. Kalau tetap ingin pakai atas risiko sendiri, cari referensinya sendiri di luar toolkit ini.
-  </div>
-
-  <div class="warn">
-    <b>[!] SEBELUM JALANIN APAPUN DI TOOLKIT INI:</b><br>
-    1. Buat System Restore Point dulu (Search &gt; "Create a restore point" &gt; Create).<br>
-    2. File <b>.reg</b> → klik kanan → Merge, lalu Yes. File <b>.bat</b> / <b>.cmd</b> → klik kanan → Run as administrator.<br>
-    3. Baca kolom "Perlu tau" di tiap tool sebelum klik download — beberapa butuh restart, beberapa gak cocok buat RAM kecil.<br>
-    4. Kalau ada software kerja yang bermasalah setelah tweak, jalankan "Reset to Default" atau pakai System Restore Point tadi.
+  <div class="note-box">
+    <b>Sebelum menjalankan apapun:</b> buat System Restore Point dulu. File <b>.reg</b> → klik kanan → Merge. File <b>.bat/.cmd</b> → Run as administrator.
+    <br><br>
+    <b>Tidak dimasukkan:</b> Disable Process Mitigation — mematikan proteksi exploit Windows secara sistem-wide, risikonya terlalu besar untuk toolkit ini.
   </div>
 
 </main>
 
 <footer>
-  <span>ZVRA PERFORMANCE VALORANT — local toolkit, tidak mengirim data kemana pun.</span>
-  <span>Gunakan dengan tanggung jawab sendiri.</span>
+  ZVRA Performance Valorant — local toolkit, tidak mengirim data kemana pun.
 </footer>
 
 <script>
@@ -402,11 +456,6 @@ const FILES = {
 'ValorantNormalPriority.reg': `Windows Registry Editor Version 5.00\r\n\r\n[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\VALORANT-Win64-Shipping.exe\\PerfOptions]\r\n"CpuPriorityClass"=dword:00000002\r\n\r\nMADE BY ZVRA for Val S26A4\r\n`,
 
 'Performance_And_Game_Mode.reg': `Windows Registry Editor Version 5.00
-
-; ============================================================
-;  PERFORMANCE OPTIONS + BACKGROUND APPS + GAME MODE
-;  Made for ZVRA Performance Valorant
-; ============================================================
 
 [HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects]
 "VisualFXSetting"=dword:00000002
@@ -441,11 +490,6 @@ const FILES = {
 `,
 
 'Valorant_Optimization_Safe.reg': `Windows Registry Editor Version 5.00
-
-; ============================================================
-;  VALORANT / GAMING OPTIMIZATION SCRIPT (SAFE VERSION)
-;  Printer & Bluetooth TIDAK didisable
-; ============================================================
 
 [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games]
 "GPU Priority"=dword:00000008
@@ -510,7 +554,250 @@ const FILES = {
 
 'Clean_Temporary_Files.bat': `@echo off\r\n@echo \r\n@echo.\r\n@echo Cache Cleaner by BareFox\r\n@echo Delete All Temporary Files?\r\n@echo.\r\npause\r\n\r\ncolor 2\r\nDel /S /F /Q %temp%\r\nDel /S /F /Q %Windir%\\Temp\r\nDel /S /F /Q C:\\WINDOWS\\Prefetch\r\n@echo.\r\n@echo All Temporary Files Sucessfully Deleted!\r\n@echo. \r\npause`,
 
-'Reset_to_Default.reg': `Windows Registry Editor Version 5.00\r\n\r\nMade by BareFox;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:380000\r\n\r\n`
+'Reset_ALL_to_Default.reg': `Windows Registry Editor Version 5.00
+
+; ============================================================
+;  RESET ALL TO DEFAULT — ZVRA PERFORMANCE VALORANT
+;  Tidak termasuk Latency Tweaks (bcdedit) & Memory Compression —
+;  lihat catatan di paling bawah file ini.
+; ============================================================
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]
+"SvcHostSplitThresholdInKB"=dword:380000
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\VALORANT-Win64-Shipping.exe\\PerfOptions]
+"CpuPriorityClass"=dword:00000002
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games]
+"GPU Priority"=dword:00000008
+"Priority"=dword:00000002
+"Scheduling Category"="Medium"
+"SFIO Priority"="Normal"
+"Background Only"="False"
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl]
+"Win32PrioritySeparation"=dword:00000002
+
+[HKEY_CURRENT_USER\\System\\GameConfigStore]
+"GameDVR_Enabled"=dword:00000001
+"GameDVR_FSEBehaviorMode"=dword:00000000
+"GameDVR_HonorUserFSEBehaviorMode"=dword:00000000
+"GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000000
+"GameDVR_EFSEFeatureFlags"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR]
+"AllowGameDVR"=dword:00000001
+
+[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize]
+"EnableTransparency"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XblGameSave]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XboxNetApiSvc]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XboxGipSvc]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XblAuthManager]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\MapsBroker]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\FontCache]
+"Start"=dword:00000002
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\FontCache3.0.0.0]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\stisvc]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\WerSvc]
+"Start"=dword:00000003
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\PcaSvc]
+"Start"=dword:00000002
+
+[HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Wecsvc]
+"Start"=dword:00000003
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects]
+"VisualFXSetting"=dword:00000000
+
+[HKEY_CURRENT_USER\\Control Panel\\Desktop]
+"FontSmoothing"="2"
+"FontSmoothingType"=dword:00000002
+"DragFullWindows"="1"
+"MenuShowDelay"="400"
+
+[HKEY_CURRENT_USER\\Control Panel\\Desktop\\WindowMetrics]
+"MinAnimate"="1"
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced]
+"TaskbarAnimations"=dword:00000001
+"IconsOnly"=dword:00000000
+"ListviewShadow"=dword:00000001
+"ListviewAlphaSelect"=dword:00000001
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM]
+"EnableAeroPeek"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy]
+"LetAppsRunInBackground"=-
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\GameBar]
+"AutoGameModeEnabled"=dword:00000001
+"AllowAutoGameMode"=dword:00000001
+
+; ============================================================
+;  Restart / sign out setelah merge biar semua efektif.
+;
+;  Latency Tweaks reset manual (Command Prompt as admin):
+;     bcdedit /deletevalue useplatformtick
+;     bcdedit /set disabledynamictick no
+;
+;  Memory Compression reset manual (PowerShell as admin):
+;     Enable-MMAgent -MemoryCompression
+; ============================================================
+`,
+
+'Reset_to_Default.reg': `Windows Registry Editor Version 5.00\r\n\r\nMade by BareFox;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:380000\r\n\r\n`,
+
+'Apply_Valorant_Settings.cmd': `@echo off
+setlocal enabledelayedexpansion
+echo ============================================
+echo   ZVRA - Apply Valorant Display Settings
+echo ============================================
+echo.
+echo PENTING: Pastikan VALORANT dan Riot Client
+echo sudah DITUTUP TOTAL sebelum lanjut, kalau
+echo tidak settingan bisa ketimpa balik nanti.
+echo.
+pause
+
+set "BASEDIR=%LOCALAPPDATA%\\VALORANT\\Saved\\Config"
+
+if not exist "%BASEDIR%" (
+  echo.
+  echo [ERROR] Folder VALORANT config tidak ditemukan di:
+  echo %BASEDIR%
+  echo Pastikan Valorant sudah pernah dijalankan minimal sekali.
+  echo.
+  pause
+  exit /b 1
+)
+
+set "CFGDIR="
+for /d %%D in ("%BASEDIR%\\*-ap") do set "CFGDIR=%%D\\WindowsClient"
+
+if not defined CFGDIR (
+  set "CFGDIR=%BASEDIR%\\cdc087cf-3237-5d05-bae8-50fa9717d53b-ap\\WindowsClient"
+)
+
+if not exist "%CFGDIR%" mkdir "%CFGDIR%"
+
+set "CFGFILE=%CFGDIR%\\GameUserSettings.ini"
+
+if exist "%CFGFILE%" (
+  set "STAMP=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%"
+  set "STAMP=!STAMP: =0!"
+  copy /Y "%CFGFILE%" "%CFGFILE%.backup_!STAMP!.bak" >nul
+  echo Backup lama disimpan sebagai: GameUserSettings.ini.backup_!STAMP!.bak
+)
+
+(
+echo [/Script/ShooterGame.ShooterGameUserSettings]
+echo DefaultMonitorDeviceID="MONITOR\\ACR0DF0\\{4d36e96e-e325-11ce-bfc1-08002be10318}\\0002"
+echo DefaultMonitorIndex=0
+echo LastConfirmedDefaultMonitorDeviceID="MONITOR\\ACR0DF0\\{4d36e96e-e325-11ce-bfc1-08002be10318}\\0002"
+echo LastConfirmedDefaultMonitorIndex=0
+echo bShouldLetterbox=False
+echo bLastConfirmedShouldLetterbox=False
+echo bUseVSync=False
+echo bUseDynamicResolution=True
+echo ResolutionSizeX=1920
+echo ResolutionSizeY=1080
+echo LastUserConfirmedResolutionSizeX=1920
+echo LastUserConfirmedResolutionSizeY=1080
+echo WindowPosX=0
+echo WindowPosY=0
+echo LastConfirmedFullscreenMode=0
+echo PreferredFullscreenMode=0
+echo AudioQualityLevel=0
+echo LastConfirmedAudioQualityLevel=0
+echo FrameRateLimit=0.000000
+echo DesiredScreenWidth=1280
+echo DesiredScreenHeight=720
+echo LastUserConfirmedDesiredScreenWidth=1280
+echo LastUserConfirmedDesiredScreenHeight=720
+echo LastRecommendedScreenWidth=-1.000000
+echo LastRecommendedScreenHeight=-1.000000
+echo LastCPUBenchmarkResult=-1.000000
+echo LastGPUBenchmarkResult=-1.000000
+echo LastGPUBenchmarkMultiplier=1.000000
+echo bUseHDRDisplayOutput=False
+echo HDRDisplayOutputNits=1000
+echo [ScalabilityGroups]
+echo sg.ViewDistanceQuality=0
+echo sg.AntiAliasingQuality=0
+echo sg.ShadowQuality=0
+echo sg.GlobalIlluminationQuality=0
+echo sg.ReflectionQuality=0
+echo sg.PostProcessQuality=0
+echo sg.TextureQuality=0
+echo sg.EffectsQuality=0
+echo sg.FoliageQuality=0
+echo sg.ShadingQuality=0
+echo [/Script/Engine.GameUserSettings]
+echo bUseDesiredScreenHeight=True
+) > "%CFGFILE%"
+
+echo.
+echo Selesai! Settingan sudah ditulis ke:
+echo %CFGFILE%
+echo.
+echo Catatan: monitor device ID di file ini contoh dari 1 PC
+echo tertentu. Kalau resolusi/monitor Valorant kamu jadi aneh
+echo setelah buka game, buka Settings - Video di dalam game
+echo dan pilih ulang monitor/resolusi kamu secara manual.
+echo.
+pause`,
+
+'Enable_Ultimate_Performance.cmd': `@echo off
+echo ============================================
+echo   ZVRA - Enable Ultimate Performance Plan
+echo ============================================
+echo.
+echo Script ini butuh akses Administrator.
+echo Kalau muncul error "Access is denied", klik
+echo kanan file ini lalu pilih "Run as administrator".
+echo.
+pause
+
+for /f "tokens=4" %%s in ('powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61') do set NEWGUID=%%s
+
+if not defined NEWGUID (
+  echo.
+  echo [ERROR] Gagal duplikat power plan. Jalankan ulang
+  echo file ini sebagai Administrator.
+  echo.
+  pause
+  exit /b 1
+)
+
+powercfg -setactive %NEWGUID%
+
+echo.
+echo Selesai! Power plan "Ultimate Performance" sekarang aktif.
+echo.
+echo Buat balik ke plan biasa nanti: buka Control Panel -^>
+echo Power Options, lalu pilih plan "Balanced" atau
+echo "High performance".
+echo.
+pause`
 };
 
 function downloadFile(name){
