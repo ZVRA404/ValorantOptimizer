@@ -252,7 +252,7 @@
 <header>
   <div class="eyebrow">System Tuning Toolkit</div>
   <h1>ZVRA Performance Valorant</h1>
-  <p class="subtitle">Kumpulan tweak Windows buat setup sebelum main. Klik detail di tiap tool sebelum jalanin kalau belum yakin.</p>
+  <p class="subtitle">Kumpulan tweak Windows buat setup sebelum main. Ini semua saran, bukan wajib — cocok buat kamu yang ngerasa PC/laptop berat pas main game. Klik detail di tiap tool sebelum jalanin kalau belum yakin.</p>
 
   <div class="social-row">
     <a class="social-btn discord" href="https://discord.gg/M5gCvGDQG6" target="_blank" rel="noopener noreferrer">
@@ -277,7 +277,7 @@
     <div class="warn-grid">
       <div class="warn-item">
         <div class="warn-num">1</div>
-        <p><b>Pilih sesuai kebutuhan</b> — bukan download semua lalu jalanin semua.</p>
+        <p><b>Ini saran, bukan wajib</b> — pilih sesuai kebutuhan, bukan download semua lalu jalanin semua.</p>
       </div>
       <div class="warn-item">
         <div class="warn-num">2</div>
@@ -422,16 +422,52 @@
       <div class="tool-head">
         <div class="tool-info">
           <h3>Latency Tweaks <span class="risk-pill risk-mid">UBAH BOOT CONFIG</span></h3>
-          <p>Disable Dynamic Tick &amp; HPET. Mengubah konfigurasi boot Windows, bukan setting biasa.</p>
+          <p>Disable Dynamic Tick &amp; HPET, plus System Responsiveness ke 0. Mengubah konfigurasi boot Windows, bukan setting biasa.</p>
         </div>
         <button class="btn" onclick="downloadFile('Latency_Tweaks.cmd')">Download .cmd</button>
       </div>
       <details>
         <summary>Detail</summary>
         <div class="tool-details">
-          <div class="row"><div class="label">Apa itu</div><div class="val">Ganti sumber clock/timer sistem biar lebih presisi.</div></div>
+          <div class="row"><div class="label">Apa itu</div><div class="val">Ganti sumber clock/timer sistem biar lebih presisi, dan set System Responsiveness ke 0 supaya CPU gak ngasih jatah reservasi buat task multimedia latar belakang saat game jalan.</div></div>
           <div class="row"><div class="label">Kenapa</div><div class="val">Bisa kurangi micro-stutter di sebagian sistem — efeknya beda-beda tiap hardware.</div></div>
-          <div class="row"><div class="label">Risiko</div><div class="val">Ubah boot config lewat <code>bcdedit</code>. <b>Wajib restart</b> setelah dijalankan.</div></div>
+          <div class="row"><div class="label">Risiko</div><div class="val">Ubah boot config lewat <code>bcdedit</code> &amp; registry multimedia scheduler. <b>Wajib restart</b> setelah dijalankan. Kalau audio/video jadi patah-patah, balikin lewat tombol "Reset ALL to Default" atau reset manual (lihat catatan bawah halaman).</div></div>
+        </div>
+      </details>
+    </div>
+
+    <div class="tool-row">
+      <div class="tool-head">
+        <div class="tool-info">
+          <h3>Disable Background Telemetry (DiagTrack) <span class="risk-pill risk-mid">OPSIONAL</span></h3>
+          <p>Matiin service Connected User Experiences &amp; Telemetry (DiagTrack) dan dmwappushservice. Ini lebih ke debloat/privacy, bukan langsung nambah FPS.</p>
+        </div>
+        <button class="btn" onclick="downloadFile('Disable_Telemetry.cmd')">Download .cmd</button>
+      </div>
+      <details>
+        <summary>Detail</summary>
+        <div class="tool-details">
+          <div class="row"><div class="label">Apa itu</div><div class="val">Stop &amp; disable service DiagTrack + dmwappushservice yang ngirim data diagnostik ke Microsoft, plus matiin autologger diagnostik.</div></div>
+          <div class="row"><div class="label">Kenapa</div><div class="val">Ngurangin proses background yang jalan diam-diam — efek ke FPS kecil, tapi lumayan buat PC yang berasa "berat" secara umum.</div></div>
+          <div class="row"><div class="label">Risiko</div><div class="val">Rendah, tapi bukan tweak wajib buat gaming — kalau ragu, skip aja bagian ini. Undo: <code>sc config DiagTrack start= demand</code> lewat Command Prompt admin.</div></div>
+        </div>
+      </details>
+    </div>
+
+    <div class="tool-row">
+      <div class="tool-head">
+        <div class="tool-info">
+          <h3>Disable Background Apps (Global Toggle) <span class="risk-pill risk-low">AMAN</span></h3>
+          <p>Matiin izin semua app UWP buat jalan di background lewat Settings, plus matiin background search indexing toggle.</p>
+        </div>
+        <button class="btn" onclick="downloadFile('Disable_Background_Apps.reg')">Download .reg</button>
+      </div>
+      <details>
+        <summary>Detail</summary>
+        <div class="tool-details">
+          <div class="row"><div class="label">Apa itu</div><div class="val">Setara ke matiin toggle "Let apps run in the background" secara global lewat registry per-user.</div></div>
+          <div class="row"><div class="label">Kenapa</div><div class="val">App kayak Mail, Calendar, Store, dll gak lagi update/refresh diam-diam di belakang layar.</div></div>
+          <div class="row"><div class="label">Risiko</div><div class="val">Notifikasi dari app-app itu mungkin telat muncul. Undo: buka Settings → Privacy → Background apps, nyalain lagi manual.</div></div>
         </div>
       </details>
     </div>
@@ -457,8 +493,8 @@
       <details>
         <summary>Detail</summary>
         <div class="tool-details">
-          <div class="row"><div class="label">Meliputi</div><div class="val">RAM threshold, priority Valorant, Valorant Safe Optimization, Performance/Game Mode.</div></div>
-          <div class="row"><div class="label">Gak termasuk</div><div class="val">Latency Tweaks &amp; Memory Compression bukan registry — cara reset ada di komentar dalam file (buka pakai Notepad).</div></div>
+          <div class="row"><div class="label">Meliputi</div><div class="val">RAM threshold, priority Valorant, Valorant Safe Optimization, Performance/Game Mode, Background Apps toggle.</div></div>
+          <div class="row"><div class="label">Gak termasuk</div><div class="val">Latency Tweaks, Memory Compression, &amp; Disable Telemetry bukan pure-registry — cara reset ada di komentar dalam file (buka pakai Notepad) atau di catatan bawah halaman.</div></div>
         </div>
       </details>
     </div>
@@ -476,15 +512,24 @@
   </div>
 
   <div class="note-box">
-    <b>Sebelum menjalankan apapun:</b> buat System Restore Point dulu. File <b>.reg</b> → klik kanan → Merge. File <b>.bat/.cmd</b> → Run as administrator.
+    <b>Sebelum menjalankan apapun:</b> buat System Restore Point dulu. File <b>.reg</b> → klik kanan → Merge. File <b>.bat/.cmd</b> → Run as administrator. Semua tool di sini <b>opsional</b> — jalanin cuma yang kamu ngerti efeknya.
     <br><br>
-    <b>Tidak dimasukkan:</b> Disable Process Mitigation — mematikan proteksi exploit Windows secara sistem-wide, risikonya terlalu besar untuk toolkit ini.
+    <b>Undo Latency Tweaks manual</b> (Command Prompt as admin):<br>
+    <code>bcdedit /deletevalue useplatformtick</code><br>
+    <code>bcdedit /set disabledynamictick no</code><br>
+    <code>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "20" /f</code>
+    <br><br>
+    <b>Undo Memory Compression</b> (PowerShell as admin): <code>Enable-MMAgent -MemoryCompression</code>
+    <br><br>
+    <b>Undo Disable Telemetry</b> (Command Prompt as admin): <code>sc config DiagTrack start= demand</code> &amp; <code>sc config dmwappushservice start= demand</code>
+    <br><br>
+    <b>Tidak dimasukkan ke toolkit ini</b> (terlalu berisiko / gak nyambung ke tujuan optimasi game): mematikan Windows Search (WSearch) &amp; Delivery Optimization (DoSvc) secara total, ganti proteksi exploit sistem-wide, ubah key NetworkProxy/TSDDD/MPEG2Demultiplexer, ganti cursor scheme system-wide, dan wrapper elevasi UAC otomatis. Kalau memang perlu, lakuin manual dan cuma kalau paham risikonya.
   </div>
 
 </main>
 
 <footer>
-  <span>ZVRA Performance Valorant — local toolkit, tidak mengirim data kemana pun.</span>
+  <span>ZVRA Performance Valorant — local toolkit, tidak mengirim data kemana pun. Semua tool bersifat saran, bukan wajib.</span>
   <div class="social-row">
     <a class="social-btn discord" href="https://discord.gg/M5gCvGDQG6" target="_blank" rel="noopener noreferrer">Discord</a>
     <a class="social-btn tiktok" href="https://www.tiktok.com/@zvrareal" target="_blank" rel="noopener noreferrer">TikTok</a>
@@ -559,6 +604,9 @@ const FILES = {
 [HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize]
 "EnableTransparency"=dword:00000000
 
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR]
+"AppCaptureEnabled"=dword:00000000
+
 [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\XblGameSave]
 "Start"=dword:00000004
 
@@ -595,7 +643,45 @@ const FILES = {
 
 'Disable_Memory_Compression.cmd': `@echo off \r\necho Memory Compression by ZVRA\r\nPowerShell "Disable-MMAgent -MemoryCompression"\r\npause`,
 
-'Latency_Tweaks.cmd': `@echo off  \r\necho Latency Tweaks by ZVRA\r\necho Disable Dynamic Tick\r\necho Disable High Precision Event Timer (HPET)\r\necho Disable Synthetic Timers\r\n@echo \r\nbcdedit /set disabledynamictick yes\r\nbcdedit /deletevalue useplatformclock\r\nbcdedit /set useplatformtick yes\r\npause`,
+'Latency_Tweaks.cmd': `@echo off  \r\necho Latency Tweaks by ZVRA\r\necho Disable Dynamic Tick\r\necho Disable High Precision Event Timer (HPET)\r\necho Disable Synthetic Timers\r\necho Set System Responsiveness to 0\r\n@echo \r\nbcdedit /set disabledynamictick yes\r\nbcdedit /deletevalue useplatformclock\r\nbcdedit /set useplatformtick yes\r\nreg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "0" /f\r\npause`,
+
+'Disable_Telemetry.cmd': `@echo off
+echo ============================================
+echo   ZVRA - Disable Background Telemetry
+echo ============================================
+echo.
+echo Script ini butuh akses Administrator.
+echo Kalau muncul error, klik kanan file ini lalu
+echo pilih "Run as administrator".
+echo.
+echo Ini OPSIONAL - lebih ke privacy/debloat,
+echo bukan tweak wajib buat naikin FPS.
+echo.
+pause
+
+sc stop DiagTrack
+sc config DiagTrack start= disabled
+sc stop dmwappushservice
+sc config dmwappushservice start= disabled
+reg add "HKLM\\SYSTEM\\CurrentControlSet\\Control\\WMI\\AutoLogger\\AutoLogger-Diagtrack-Listener" /v Start /t REG_DWORD /d 0 /f
+reg add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection" /v AllowTelemetry /t REG_DWORD /d 0 /f
+
+echo.
+echo Selesai! Service telemetry sudah dimatikan.
+echo.
+echo Undo manual: sc config DiagTrack start= demand
+echo              sc config dmwappushservice start= demand
+echo.
+pause`,
+
+'Disable_Background_Apps.reg': `Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications]
+"GlobalUserDisabled"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy]
+"LetAppsRunInBackground"=dword:00000002
+`,
 
 'Clean_Temporary_Files.bat': `@echo off\r\n@echo \r\n@echo.\r\n@echo Cache Cleaner by BareFox\r\n@echo Delete All Temporary Files?\r\n@echo.\r\npause\r\n\r\ncolor 2\r\nDel /S /F /Q %temp%\r\nDel /S /F /Q %Windir%\\Temp\r\nDel /S /F /Q C:\\WINDOWS\\Prefetch\r\n@echo.\r\n@echo All Temporary Files Sucessfully Deleted!\r\n@echo. \r\npause`,
 
@@ -603,8 +689,9 @@ const FILES = {
 
 ; ============================================================
 ;  RESET ALL TO DEFAULT — ZVRA PERFORMANCE VALORANT
-;  Tidak termasuk Latency Tweaks (bcdedit) & Memory Compression —
-;  lihat catatan di paling bawah file ini.
+;  Tidak termasuk Latency Tweaks (bcdedit/SystemResponsiveness),
+;  Memory Compression & Disable Telemetry — lihat catatan di
+;  paling bawah file ini.
 ; ============================================================
 
 [HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]
@@ -632,6 +719,9 @@ const FILES = {
 
 [HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR]
 "AllowGameDVR"=dword:00000001
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR]
+"AppCaptureEnabled"=dword:00000001
 
 [HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize]
 "EnableTransparency"=dword:00000001
@@ -693,6 +783,9 @@ const FILES = {
 [HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy]
 "LetAppsRunInBackground"=-
 
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications]
+"GlobalUserDisabled"=dword:00000000
+
 [HKEY_CURRENT_USER\\Software\\Microsoft\\GameBar]
 "AutoGameModeEnabled"=dword:00000001
 "AllowAutoGameMode"=dword:00000001
@@ -703,9 +796,14 @@ const FILES = {
 ;  Latency Tweaks reset manual (Command Prompt as admin):
 ;     bcdedit /deletevalue useplatformtick
 ;     bcdedit /set disabledynamictick no
+;     reg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "20" /f
 ;
 ;  Memory Compression reset manual (PowerShell as admin):
 ;     Enable-MMAgent -MemoryCompression
+;
+;  Disable Telemetry reset manual (Command Prompt as admin):
+;     sc config DiagTrack start= demand
+;     sc config dmwappushservice start= demand
 ; ============================================================
 `,
 
