@@ -181,7 +181,7 @@
   <h1>ZVRA<span> PERFORMANCE</span><br>VALORANT</h1>
   <p class="subtitle">Kumpulan registry &amp; script tweak buat setup Windows sebelum ranked. Pilih, download, jalankan — semua dikontrol dari satu tempat.</p>
   <div class="status-row">
-    <div><span class="dot"></span>17 script siap pakai</div>
+    <div><span class="dot"></span>18 script siap pakai</div>
     <div>PRIORITY TUNER · <b>ONLINE</b></div>
     <div>RAM RANGE · 1GB&ndash;32GB</div>
   </div>
@@ -233,6 +233,14 @@
   <div class="panel">
     <h2>Tweak &amp; Cleanup</h2>
     <p class="desc">Tools tambahan buat bebersih sistem dan kurangi latency. Baca catatan tiap tool sebelum jalanin.</p>
+
+    <div class="tool-row">
+      <div class="tool-info">
+        <h3>Performance Options + Background Apps + Game Mode</h3>
+        <p>Set Visual Effects ke "Adjust for best performance" (thumbnail &amp; font smoothing tetap nyala), matikan transparency, "Let apps run in background" jadi Force Deny, dan Game Mode otomatis ON.</p>
+      </div>
+      <button class="btn" onclick="downloadFile('Performance_And_Game_Mode.reg')">Download .reg</button>
+    </div>
 
     <div class="tool-row">
       <div class="tool-info">
@@ -366,13 +374,52 @@ const FILES = {
 "Start"=dword:00000004
 `,
 
+'Performance_And_Game_Mode.reg': `Windows Registry Editor Version 5.00
+
+; ============================================================
+;  PERFORMANCE OPTIONS + BACKGROUND APPS + GAME MODE
+;  Made for ZVRA Performance Valorant
+; ============================================================
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects]
+"VisualFXSetting"=dword:00000002
+
+[HKEY_CURRENT_USER\\Control Panel\\Desktop]
+"FontSmoothing"="2"
+"FontSmoothingType"=dword:00000002
+"DragFullWindows"="0"
+"MenuShowDelay"="0"
+
+[HKEY_CURRENT_USER\\Control Panel\\Desktop\\WindowMetrics]
+"MinAnimate"="0"
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced]
+"TaskbarAnimations"=dword:00000000
+"IconsOnly"=dword:00000000
+"ListviewShadow"=dword:00000000
+"ListviewAlphaSelect"=dword:00000000
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM]
+"EnableAeroPeek"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy]
+"LetAppsRunInBackground"=dword:00000002
+
+[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize]
+"EnableTransparency"=dword:00000000
+
+[HKEY_CURRENT_USER\\Software\\Microsoft\\GameBar]
+"AutoGameModeEnabled"=dword:00000001
+"AllowAutoGameMode"=dword:00000001
+`,
+
 'Disable_Memory_Compression.cmd': `@echo off \r\necho Memory Compression by ZVRA\r\nPowerShell "Disable-MMAgent -MemoryCompression"\r\npause`,
 
 'Latency_Tweaks.cmd': `@echo off  \r\necho Latency Tweaks by ZVRA\r\necho Disable Dynamic Tick\r\necho Disable High Precision Event Timer (HPET)\r\necho Disable Synthetic Timers\r\n@echo \r\nbcdedit /set disabledynamictick yes\r\nbcdedit /deletevalue useplatformclock\r\nbcdedit /set useplatformtick yes\r\npause`,
 
 'Clean_Temporary_Files.bat': `@echo off\r\n@echo \r\n@echo.\r\n@echo Cache Cleaner by BareFox\r\n@echo Delete All Temporary Files?\r\n@echo.\r\npause\r\n\r\ncolor 2\r\nDel /S /F /Q %temp%\r\nDel /S /F /Q %Windir%\\Temp\r\nDel /S /F /Q C:\\WINDOWS\\Prefetch\r\n@echo.\r\n@echo All Temporary Files Sucessfully Deleted!\r\n@echo. \r\npause`,
 
-'Reset_to_Default.reg': `Windows Registry Editor Version 5.00\r\n\r\nMade by BareFox;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:380000\r\n\r\n`
+'Reset_to_Default.reg': `Windows Registry Editor Version 5.00\r\n\r\nMade by BareFox;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:3800000\r\n\r\n`
 };
 
 function downloadFile(name){
