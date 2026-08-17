@@ -372,7 +372,7 @@ const FILES = {
 
 'Clean_Temporary_Files.bat': `@echo off\r\n@echo \r\n@echo.\r\n@echo Cache Cleaner by BareFox\r\n@echo Delete All Temporary Files?\r\n@echo.\r\npause\r\n\r\ncolor 2\r\nDel /S /F /Q %temp%\r\nDel /S /F /Q %Windir%\\Temp\r\nDel /S /F /Q C:\\WINDOWS\\Prefetch\r\n@echo.\r\n@echo All Temporary Files Sucessfully Deleted!\r\n@echo. \r\npause`,
 
-'Reset_to_Default.reg': `Windows Registry Editor Version 5.00\r\n\r\nMade by BareFox;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:3800000\r\n\r\n`
+'Reset_to_Default.reg': `Windows Registry Editor Version 5.00\r\n\r\nMade by BareFox;\r\n\r\n[HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control]\r\n"SvcHostSplitThresholdInKB"=dword:380000\r\n\r\n`
 };
 
 function downloadFile(name){
